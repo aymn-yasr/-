@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة نتائج طلاب الصف التاسع</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #00ff00;
+      text-shadow: 0 0 10px #00ff00;
+      margin-bottom: 40px;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00ff00;
+      padding: 30px;
+      border-radius: 15px;
+      width: 400px;
+      margin: auto;
+      box-shadow: 0 0 20px #00ff00;
+    }
+
+    input {
+      background-color: black;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 10px;
+      width: 90%;
+      margin: 10px 0;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #003300;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #005500;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #00ff00;
+      white-space: pre-line;
+      text-align: right;
+      direction: rtl;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #00ff00;
+      padding: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>لوحة نتائج طلاب الصف التاسع</h1>
+  <div class="container">
+    <input type="text" id="name" placeholder="ادخل اسمك"><br>
+    <input type="text" id="seat" placeholder="ادخل رقم الجلوس"><br>
+    <button onclick="showResult()">عرض النتيجة</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <!-- Firebase SDK باستخدام modules -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDmxldheuH4qZvHalnMk4W4-z0tdBf5B54",
+      authDomain: "t9-results.firebaseapp.com",
+      projectId: "t9-results",
+      storageBucket: "t9-results.firebasestorage.app",
+      messagingSenderId: "115892429512",
+      appId: "1:115892429512:web:414c8ce8b3ad9e83557bfd",
+      databaseURL: "https://t9-results-default-rtdb.firebaseio.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    window.showResult = function () {
+      const name = document.getElementById("name").value.trim();
+      const seat = document.getElementById("seat").value.trim();
+
+      if (!name || !seat) {
+        alert("يرجى إدخال الاسم ورقم الجلوس");
+        return;
+      }
+
+      const subjects = ["اللغة العربية", "الرياضيات", "اللغة الإنجليزية", "العلوم", "التربية الإسلامية", "الدراسات الاجتماعية"];
+      let total = 0;
+      let subjectScores = {};
+      let tableRows = "";
+
+      subjects.forEach(subject => {
+        const score = Math.floor(Math.random() * 41) + 60; // درجة بين 60 - 100
+        subjectScores[subject] = score;
+        total += score;
+        tableRows += `<tr><td>${subject}</td><td>${score}</td></tr>`;
+      });
+
+      const avg = Math.round(total / subjects.length);
+      const status = avg >= 50 ? "ناجح" : "راسب";
+
+      // حفظ في Firebase
+      set(ref(db, "results/" + seat), {
+        name,
+        seat,
+        scores: subjectScores,
+        average: avg,
+        status,
+        timestamp: Date.now()
+      });
+
+      document.getElementById("result").innerHTML = `
+الاسم: ${name}
+رقم الجلوس: ${seat}
+المعدل: ${avg} / 100
+الحالة: ${status}
+
+جدول الدرجات:
+<table>
+  <tr><th>المادة</th><th>الدرجة</th></tr>
+  ${tableRows}
+</table>`;
+    };
+  </script>
+</body>
+</html>
