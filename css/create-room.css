@@ -1,0 +1,98 @@
+/* -- تنسيقات عامة للصفحة -- */
+body {
+    background-color: #eef2f7; /* نفس لون الخلفية */
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* -- حاوية النموذج الرئيسية -- */
+.create-room-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+/* -- بطاقة النموذج (الكونتينر الأبيض) -- */
+.create-room-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.card-title {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 30px;
+}
+
+/* -- مجموعات حقول النموذج -- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box; /* لضمان أن العرض يشمل البادينج */
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* -- زر الإرسال -- */
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+}
+
+/* -- رسائل الحالة -- */
+.status-message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1em;
+    font-weight: bold;
+}

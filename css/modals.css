@@ -1,0 +1,378 @@
+/* الأنماط العامة للمودالات */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* خلفية معتمة جداً */
+    display: flex;
+    justify-content: center; /* توسيط أفقي للمودال */
+    align-items: center;    /* توسيط رأسي للمودال */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden; /* <--- مهم: لإخفاء المودال افتراضياً */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    backdrop-filter: blur(0px); /* <--- تم تقليل قيمة الضبابية هنا */
+    -webkit-backdrop-filter: blur(0px); /* <--- للتوافق مع سفاري، تم تقليل قيمة الضبابية هنا */
+}
+
+
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ------------------------------------------------------------------- */
+/* أنماط خاصة بمودال تعديل الملف الشخصي (Edit Profile Modal) - التصميم الجديد */
+/* ------------------------------------------------------------------- */
+
+.edit-profile-container {
+    background-color: #000; /* خلفية سوداء بالكامل */
+    border-radius: 15px; /* حواف أكثر دائرية */
+    width: 95%;
+    max-width: 450px; /* لا يزال يحد من العرض ليظل "مودال" وليس صفحة كاملة */
+    /* **<--- مهم: تعديل الارتفاع لترك مسافة من الأعلى والأسفل** */
+    height: calc(100vh - 40px); /* 20px من الأعلى + 20px من الأسفل = 40px */
+    overflow: hidden; /* للحفاظ على التمرير داخل المودال */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* **<--- إعادة الظل** */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.modal-overlay.show .edit-profile-container {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* القسم العلوي الجديد: أيقونات على اليسار، تفاصيل البروفايل على اليمين */
+.header-section-new {
+    /* **<--- تم تعديل هذا الجزء للتحكم في مكان الصورة الخلفية** */
+    position: relative; /* يجب أن يكون relative ليحتوي الصورة ذات position: absolute */
+    top: 0;
+    z-index: 50; /* قيمة مناسبة للعناصر العلوية */
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px;
+    /* **<--- تم إزالة الخلفية المتدرجة، ستوفرها الصورة الداخلية** */
+    /* background: linear-gradient(to bottom, #000, #1a1a1a); */
+    background-color: #000; /* خلفية احتياطية إذا لم يتم تحميل الصورة */
+    color: #fff;
+    border-bottom: 1px solid #333;
+    min-height: 220px; /* حافظ على ارتفاعه */
+    flex-shrink: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* **<--- مهم جداً لقص أي جزء زائد من الصورة الخلفية** */
+}
+
+/* الأنماط الجديدة للصورة الداخلية كخلفية */
+.edit-profile-container .inner-profile-background-image {
+    position: absolute; /* لجعلها تطفو وتملأ الحاوية الأب */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* لضمان تغطية الصورة للمساحة دون تشويه */
+    z-index: 0; /* لجعلها تظهر خلف جميع العناصر الأخرى في .header-section-new */
+    filter: brightness(0.7); /* لجعل الصورة أغمق قليلاً وتحسين وضوح النص فوقها */
+    /* يمكنك تجربة: filter: grayscale(50%) brightness(0.7); للحصول على تأثير أقل تشبعاً ودراماتيكية أكثر */
+}
+
+
+.header-left-actions {
+    position: absolute; /* **<--- تأكيد أن position: absolute لتبقى في مكانها فوق الخلفية** */
+    top: 15px;
+    left: 15px;
+    display: flex;
+    gap: 15px;
+    direction: ltr;
+    z-index: 1; /* **<--- تأكيد أن لها z-index أعلى من الصورة الخلفية** */
+}
+
+.header-left-actions .header-icon {
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #a0a0a0;
+    transition: color 0.2s ease;
+}
+
+.header-left-actions .header-icon:hover {
+    color: #fff;
+}
+
+.header-left-actions .close-profile-modal {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #ddd;
+}
+
+.header-left-actions .close-profile-modal:hover {
+    color: #fff;
+}
+
+.header-right-profile {
+    position: absolute; /* **<--- تأكيد أن position: absolute لتبقى في مكانها فوق الخلفية** */
+    top: 15px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    direction: rtl;
+    text-align: right;
+    width: auto;
+    z-index: 1; /* **<--- تأكيد أن لها z-index أعلى من الصورة الخلفية** */
+}
+
+.user-main-section-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: auto;
+    position: relative; /* **<--- يجب أن يكون relative لاحتواء likes-and-level** */
+    padding-top: 100px; /* لترك مسافة لـ likes-and-level */
+    padding-right: 5px;
+    z-index: 1; /* **<--- تأكيد أن لها z-index أعلى من الصورة الخلفية** */
+}
+
+.likes-and-level {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    /* **<--- تم تعديل الخلفية لتكون شفافة فوق الصورة** */
+    background-color: rgba(0, 0, 0, 0.4); /* خلفية شفافة لتحسين الرؤية فوق الصورة */
+    border-radius: 20px;
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    z-index: 2; /* **<--- تأكد أنها تظهر فوق الصورة الداخلية وأي عنصر آخر داخل user-main-section-wrapper إذا لزم الأمر** */
+}
+
+.likes:hover, .level:hover {
+    background-color: rgba(0, 0, 0, 0.6); /* خلفية هوفر شفافة أكثر */
+}
+
+.likes span, .level span {
+    margin: 0 3px;
+}
+
+.likes .like-icon {
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+.level .level-icon {
+    color: #ffc107;
+    font-size: 1.1em;
+}
+
+.user-main-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-direction: row; /* الصورة وجانبها معلومات المستخدم */
+    width: auto;
+    justify-content: flex-end; /* المحاذاة لليمين */
+    margin-right: -15px; /* <--- إضافة هامش أيمن هنا */
+    z-index: 1; /* **<--- تأكيد أنها فوق الصورة الخلفية** */
+}
+
+.user-avatar-wrapper {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #6a1b9a;
+    box-shadow: 0 0 10px rgba(106, 27, 154, 0.5);
+    flex-shrink: 0;
+    z-index: 1; /* **<--- تأكيد أنها فوق الصورة الخلفية** */
+}
+
+.user-avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-overlay-buttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 0;
+    z-index: 2; /* **<--- لتظهر فوق الصورة الرمزية** */
+}
+
+.avatar-overlay-buttons span {
+    color: #fff;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.avatar-overlay-buttons span:hover {
+    color: #ddd;
+}
+
+.user-info-section {
+    display: flex;
+    flex-direction: column; /* العناصر داخلها (rank-info و user-name-display) ستكون فوق بعضها */
+    align-items: flex-end; /* محاذاة كل شيء لليمين */
+    flex-grow: 1;
+    justify-content: center; /* توسيط عمودي للمحتوى بجانب الصورة */
+    z-index: 1; /* **<--- تأكيد أنها فوق الصورة الخلفية** */
+}
+
+/* النمط الجديد للحاوية التي تجمع صورة الرتبة واسم الرتبة */
+.rank-info {
+    display: flex; /* لجعل الصورة والرتبة في سطر واحد */
+    align-items: center; /* محاذاة رأسية */
+    gap: 8px; /* مسافة بين صورة واسم الرتبة */
+    margin-bottom: 2px; /* مسافة صغيرة تحت سطر الرتبة */
+    direction: rtl; /* مهم لترتيب العناصر من اليمين إلى اليسار */
+}
+
+.rank-image {
+    width: 20px; /* حدد الحجم المناسب لصورة الرتبة */
+    height: 20px;
+    object-fit: contain; /* احتواء الصورة داخل الأبعاد */
+    flex-shrink: 0; /* عدم السماح للصورة بالانكماش */
+}
+
+.user-rank {
+    color: #ddd;
+    font-size: 0.9em;
+    margin-bottom: 0; /* تأكد أنها صفر هنا */
+    font-family: 'Arial', sans-serif;
+    white-space: nowrap; /* لمنع النص من الانقسام */
+}
+
+.user-name-display {
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    white-space: nowrap; /* لمنع النص من الانقسام */
+    margin-top: 0; /* تأكد أنها صفر هنا */
+}
+
+/* تبويبات (Tabs) */
+.tabs-container {
+    /* **<--- تم تغيير هذه الخصائص لتصبح جزءًا من القسم السفلي (الأبيض)** */
+    position: relative; /* لم يعد sticky في الأعلى */
+    top: auto; /* إلغاء خاصية top: 180px */
+    z-index: 10; /* قيمة أقل لتكون مع الجزء السفلي */
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff; /* <--- تم تغيير الخلفية إلى الأبيض */
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* border أفتح يتناسب مع الأبيض */
+    flex-shrink: 0;
+}
+
+.tab-button {
+    background-color: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 0.9em;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+}
+
+.tab-button.active {
+    color: #fff;
+    background-color: #6a1b9a;
+    font-weight: bold;
+}
+
+.tab-button:hover:not(.active) {
+    color: #000; /* <--- لون النص عند التحويم ليتناسب مع الخلفية البيضاء */
+    background-color: #f0f0f0; /* <--- خلفية زر التحويم لتكون متناسقة */
+}
+
+/* محتوى التبويبات - هذا هو الجزء الذي سيصبح أبيض */
+.tab-content {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto; /* هذا هو القسم الذي سيتم تمريره */
+    background-color: #fff;
+}
+
+/* ------------------------------------------------------------------- */
+/* أنماط قائمة الخيارات في الجزء السفلي (الآن على خلفية بيضاء) */
+/* ------------------------------------------------------------------- */
+.profile-options-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tab-content .profile-options-list {
+    padding-top: 5px;
+}
+
+.profile-options-list li {
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.profile-options-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.option-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: #333;
+    font-size: 0.9em;
+    font-family: 'Arial', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    text-align: right;
+    justify-content: flex-end;
+    direction: rtl;
+    border-radius: 0;
+}
+
+.option-btn:hover {
+    background-color: #f0f0f0;
+    color: #000;
+    border-radius: 5px;
+}
+
+.option-btn .option-icon {
+    font-size: 1em;
+    margin-right: 10px;
+    color: #000;
+}
+
+.option-btn .option-text {
+    flex-grow: 1;
+    text-align: right;
+    padding-right: 5px;
+}
