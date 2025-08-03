@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء غرفة جديدة</title>
+    <link rel="stylesheet" href="css/create-room.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+    <div class="create-room-container">
+        <div class="create-room-card">
+            <h1 class="card-title">إنشاء غرفة جديدة</h1>
+            <form id="create-room-form">
+                <div class="form-group">
+                    <label for="room-name">اسم الغرفة</label>
+                    <input type="text" id="room-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="room-description">وصف الغرفة</label>
+                    <textarea id="room-description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="room-image">صورة الغرفة</label>
+                    <input type="file" id="room-image" accept="image/*" required>
+                </div>
+                <button type="submit" class="submit-btn">إنشاء</button>
+                <div class="status-message" id="status-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/cloudinary-utils.js" type="module"></script>
+    <script src="js/create-room.js" type="module"></script>
+</body>
+</html>

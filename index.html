@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة منور</title>
+    <link rel="stylesheet" href="css/login_styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div id="alertMessage" class="alert-message"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">منور</div>
+        </div>
+
+        <div class="buttons">
+            <button class="button visitor-login" id="openVisitorModal">
+                <i class="fas fa-rocket"></i> دخول الزوار
+            </button>
+            <button class="button register-now" id="openRegisterModal">
+                <i class="fas fa-user-plus"></i> سجل الآن
+            </button>
+            <button class="button member-login" id="openMemberModal">
+                دخول بالعضوية
+            </button>
+        </div>
+
+        <div class="warning-box">
+            <p class="warning-icon"><i class="fas fa-exclamation-triangle"></i></p>
+            <p>تنبيه: الحرص على إثراء الدردشة بمعلومات قيمة ومفيدة، ونشر المحتوى الجيد الذي يساعد المستخدمين للحصول على المزيد من المعلومات والأفكار الحديثة، حيث يتم تنفيذ مراقبة صارمة ومستمرة لجميع المشاركات لضمان بيئة آمنة وداعمة.</p>
+        </div>
+
+        <div class="contact-us">
+            <button class="contact-button">
+                <i class="fas fa-headset"></i> اتصل بنا
+            </button>
+        </div>
+
+        <div class="terms-agreement">
+            <p>بالنقر على "سجل الآن" أو "دخول الزوار" أو "دخول بالعضوية"، فإنك توافق على <a href="#">شروط الخدمة</a> و <a href="#">سياسة الخصوصية</a>.</p>
+        </div>
+    </div>
+
+    <div id="visitorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button visitor-close-button">&times;</span>
+            <h2>دخول الزوار</h2>
+            <form id="visitorForm">
+                <div class="form-group">
+                    <label for="visitorName">اسمك المستعار:</label>
+                    <input type="text" id="visitorName" name="visitorName" required>
+                </div>
+                <div class="form-group">
+                    <label for="visitorAge">العمر:</label>
+                    <select id="visitorAge" name="visitorAge" required>
+                        <option value="">اختر عمرك</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="visitorGender">الجنس:</label>
+                    <select id="visitorGender" name="visitorGender" required>
+                        <option value="">اختر</option>
+                        <option value="male">ذكر</option>
+                        <option value="female">أنثى</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-modal-button">دخول</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button register-close-button">&times;</span>
+            <h2>سجل الآن</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">اسم المستخدم:</label>
+                    <input type="text" id="registerName" name="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">كلمة المرور:</label>
+                    <input type="password" id="registerPassword" name="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerAge">العمر:</label>
+                    <select id="registerAge" name="registerAge" required>
+                        <option value="">اختر عمرك</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerGender">الجنس:</label>
+                    <select id="registerGender" name="registerGender" required>
+                        <option value="">اختر</option>
+                        <option value="male">ذكر</option>
+                        <option value="female">أنثى</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-modal-button">تسجيل</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="memberModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button member-close-button">&times;</span>
+            <h2>دخول الأعضاء</h2>
+            <form id="memberForm">
+                <div class="form-group">
+                    <label for="memberName">اسم المستخدم أو البريد الإلكتروني:</label>
+                    <input type="text" id="memberName" name="memberName" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberPassword">كلمة المرور:</label>
+                    <input type="password" id="memberPassword" name="memberPassword" required>
+                </div>
+                <button type="submit" class="submit-modal-button">دخول</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>
